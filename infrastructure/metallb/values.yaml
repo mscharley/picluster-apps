@@ -1,0 +1,8 @@
+pools:
+  # pihole:
+  #   - 10.0.0.2/32
+  # traefik:
+  #   - 10.0.0.200/32
+
+metallb:
+  loadBalancerClass: 'metallb'

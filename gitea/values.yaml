@@ -1,0 +1,83 @@
+tailnet: tail012345.ts.net
+
+renovate:
+  schedule: '*/10 * * * *'
+  gitAuthor: 'Renovate Bot <renovate@scharley.me>'
+  existingSecret: 'renovate-secrets'
+
+  image:
+    repository: renovate/renovate
+    tag: 40.36.2@sha256:0612073dd7e166b6d637a0470bc843b8afd6e236f610b7a11aee33efb6af3377
+
+gitea:
+  image:
+    registry: docker.gitea.com
+    repository: gitea
+    tag: '1.23.8'
+
+  redis-cluster:
+    enabled: false
+  redis:
+    enabled: true
+  postgresql:
+    enabled: true
+  postgresql-ha:
+    enabled: false
+
+  persistence:
+    enabled: true
+
+  gitea:
+    admin:
+      username: 'mscharley'
+      password: 'password1'
+      email: 'matt@scharley.me'
+      passwordMode: initialOnlyRequireReset
+    config:
+      database:
+        DB_TYPE: postgres
+      indexer:
+        ISSUE_INDEXER_TYPE: bleve
+        REPO_INDEXER_ENABLED: true
+      repository.signing:
+        DEFAULT_TRUST_MODEL: collaboratorcommitter
+      webhook:
+        ALLOWED_HOST_LIST: 'private,*.svc.cluster.local'
+      actions:
+        ENABLED: 'true'
+        ARTIFACT_RETENTION_DAYS: 30
+        LOG_RETENTION_DAYS: 90
+
+  actions:
+    enabled: true
+    existingSecret: 'gitea-actions-registration-token'
+    existingSecretKey: 'token'
+
+    statefulset:
+      actRunner:
+        repository: gitea/act_runner
+        tag: 0.2.11
+
+  service:
+    http:
+      type: ClusterIP
+      port: 3000
+      clusterIP: ''
+    ssh:
+      type: LoadBalancer
+      loadBalancerClass: tailscale
+      annotations:
+        tailscale.com/hostname: git
+      port: 22
+      clusterIP: ''
+
+  ingress:
+    enabled: true
+    className: tailscale
+    hosts:
+      - host: gitea
+        paths:
+          - path: '/'
+            pathType: 'Prefix'
+    tls:
+      - hosts: ['gitea']

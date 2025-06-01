@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: gitea
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: gitea
+  labels:
+    argo/type: app
+spec:
+  project: default
+  syncPolicy:
+{{ .Values.syncPolicy | toYaml | indent 4 }}
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: gitea
+  ignoreDifferences:
+    - kind: Service
+      jsonPointers:
+        - /spec/externalName
+  source:
+    repoURL: {{ .Values.repoURL }}
+    path: gitea/
+    targetRevision: main
+    helm:
+      valuesObject:
+        tailnet: {{ .Values.tailnet }}
+        gitea:
+          gitea:
+            config:
+              server:
+                DOMAIN: gitea.{{ .Values.tailnet }}
+                SSH_DOMAIN: git.{{ .Values.tailnet }}

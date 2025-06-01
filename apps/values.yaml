@@ -1,0 +1,14 @@
+tailnet: tail01234.ts.net
+repoURL: git@git.tail01234.ts.net:picluster/apps.git
+
+syncPolicy:
+  automated:
+    prune: true
+    selfHeal: true
+
+pihole:
+  localDomainName: local
+  piholeWebUiIp: 10.0.0.200
+  localReverseDns:
+    dhcpDnsServer: 10.0.0.1
+    localCidr: 10.0.0.1/24

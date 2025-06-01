@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: "{{ .Release.Name }}-webui"
+  labels:
+    app: {{ .Release.Name }}
+spec:
+  ports:
+    - port: 8384
+      name: webui
+  selector:
+    app: {{ .Release.Name }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}
+  annotations:
+    tailscale.com/hostname: {{ .Values.tailscale.listener }}
+  labels:
+    app: {{ .Release.Name }}
+spec:
+  ports:
+    - port: 22000
+      protocol: TCP
+      name: listener-tcp
+    - port: 22000
+      protocol: UDP
+      name: listener-udp
+  type: LoadBalancer
+  loadBalancerClass: tailscale
+  selector:
+    app: {{ .Release.Name }}

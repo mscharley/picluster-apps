@@ -1,0 +1,5 @@
+tailscale-operator:
+  apiServerProxyConfig:
+    mode: 'true'
+  operatorConfig:
+    hostname: 'picluster'

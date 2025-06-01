@@ -1,0 +1,5 @@
+prometheus:
+  crds:
+    enabled: false
+    upgradeJob:
+      enabled: true

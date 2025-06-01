@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ .Release.Name }}
+spec:
+  # This app doesn't support multiple deployments easily thanks to filesystem shenanigans
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+  serviceName: "{{ .Release.Name }}"
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+        - name: freshrss
+          image: "{{ default "docker.io" .Values.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          env:
+            - name: TZ
+              value: {{ default "Etc/UTC" .Values.timezone }}
+            - name: PGSSLMODE
+              value: require
+            - name: PGSSLCERT
+              value: /tmp/postgresql.crt
+            - name: CRON_MIN
+              value: {{ default "0" .Values.cron.minute }}
+          ports:
+            - containerPort: 80
+              name: web
+          volumeMounts:
+            - name: extensions
+              mountPath: /var/www/FreshRSS/extensions
+            - name: data
+              mountPath: /var/www/FreshRSS/data
+  volumeClaimTemplates:
+    - metadata:
+        name: extensions
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 100Mi
+    - metadata:
+        name: data
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 1Ti

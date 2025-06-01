@@ -1,0 +1,7 @@
+disks:
+  # postgresql:
+  #   count: 10
+  #   storageClassName: postgresql
+  #   chapSecretName: iscsi-chap
+  #   targetPortal: truenas.local:3260
+  #   iqn: "iqn.your-iqn"

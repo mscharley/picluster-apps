@@ -1,0 +1,5 @@
+admin:
+  username: matt@scharley.me
+
+tailscale:
+  web: pgadmin

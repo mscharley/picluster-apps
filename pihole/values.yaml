@@ -1,0 +1,62 @@
+pihole:
+  image:
+    repository: 'pihole/pihole'
+    tag: '2025.05.1@sha256:db38df3e050606bd014c801c2cbb0b13f263d3122d3d817a8cbcee807688af24'
+
+  replicaCount: 2
+  maxUnavailable: 1
+  resources:
+    limits:
+      cpu: 1000m
+      memory: 256Mi
+    requests:
+      cpu: 500m
+      memory: 256Mi
+
+  # Do not deploy to nodes which metallb won't be allowed to service
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+            - key: node.kubernetes.io/exclude-from-external-load-balancers
+              operator: DoesNotExist
+
+  admin:
+    existingSecret: 'pihole-password'
+
+  DNS1: 9.9.9.11
+  DNS2: 149.112.112.11
+  podDnsConfig:
+    enabled: true
+    nameservers:
+      - 127.0.0.1
+      - 9.9.9.11
+
+  extraEnvVars:
+    FTLCONF_dns_dnssec: "true"
+    FTLCONF_dns_listeningMode: "ALL"
+    FTLCONF_dns_rateLimit_count: "5000"
+    FTLCONF_dns_rateLimit_interval: "30"
+
+    FTLCONF_ntp_ipv4_active: "false"
+    FTLCONF_ntp_ipv6_active: "false"
+    FTLCONF_ntp_sync_active: "false"
+
+    FTLCONF_database_maxDBdays: "0"
+    FTLCONF_webserver_session_restore: "false"
+
+  serviceDhcp:
+    enabled: false
+
+  serviceWeb:
+    annotations:
+      traefik.ingress.kubernetes.io/service.sticky.cookie: "true"
+      traefik.ingress.kubernetes.io/service.sticky.cookie.name: "traefik-session"
+
+  serviceDns:
+    type: LoadBalancer
+    mixedService: true
+    loadBalancerClass: metallb
+    annotations:
+      metallb.io/address-pool: pihole-pool

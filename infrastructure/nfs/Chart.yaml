@@ -1,0 +1,7 @@
+apiVersion: v2
+name: nfs
+version: '0.0.0-development'
+dependencies:
+  - repository: https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner
+    name: nfs-subdir-external-provisioner
+    version: '4.0.18'

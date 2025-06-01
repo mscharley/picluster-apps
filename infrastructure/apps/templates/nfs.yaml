@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: nfs
+  labels:
+    argo/type: infrastructure
+spec:
+  project: default
+  syncPolicy:
+{{ .Values.syncPolicy | toYaml | indent 4 }}
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: kube-system
+  source:
+    repoURL: {{ .Values.repoURL }}
+    path: infrastructure/nfs/
+    targetRevision: main
+    helm:
+      valuesObject:
+        nfs-subdir-external-provisioner:
+          nfs:
+            server: "{{ .Values.nfs.server }}"
+            path: "{{ .Values.nfs.path }}"

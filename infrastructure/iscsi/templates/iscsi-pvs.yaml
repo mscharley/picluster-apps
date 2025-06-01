@@ -1,0 +1,25 @@
+{{- range $name, $disk := .Values.disks }}
+{{- range $i, $e := until ($disk.count | int) }}
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: "{{ default $name $disk.kubernetesNamePrefix }}-{{ $e }}"
+spec:
+  capacity:
+    storage: {{ default "50Gi" $disk.storage }}
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: {{ default $name $disk.storageClassName }}
+  iscsi:
+    targetPortal: {{ $disk.targetPortal }}
+    iqn: "{{ $disk.iqn }}:{{ $name }}-{{ $e }}"
+    lun: {{ default 0 $disk.lun }}
+    fsType: ext4
+    chapAuthSession: true
+    secretRef:
+       name: {{ $disk.chapSecretName }}
+{{- end }}
+{{- end }}

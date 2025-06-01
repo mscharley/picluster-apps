@@ -1,0 +1,27 @@
+tailnet: tail01234.ts.net
+repoURL: git@git.tail01234.ts.net:picluster/apps.git
+
+syncPolicy:
+  automated:
+    prune: true
+    selfHeal: true
+
+nfs:
+  server: truenas.local
+  path: /mnt/pool0/nfs/picluster
+
+iscsi:
+  disks:
+    # postgresql:
+    #   count: 10
+    #   storageClassName: postgresql
+    #   chapSecretName: iscsi-chap
+    #   targetPortal: truenas.local:3260
+    #   iqn: "iqn.your-iqn"
+
+metallb:
+  pools:
+    # pihole:
+    #   - 10.0.0.2/32
+    # traefik:
+    #   - 10.0.0.200/32

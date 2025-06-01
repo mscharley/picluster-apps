@@ -1,0 +1,7 @@
+apiVersion: v2
+name: pihole
+version: '0.0.0-development'
+dependencies:
+  - repository: https://mojo2600.github.io/pihole-kubernetes
+    name: pihole
+    version: '2.31.0'

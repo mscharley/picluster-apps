@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: "{{ .Release.Name }}-webui"
+  labels:
+    app: {{ .Release.Name }}
+spec:
+  ingressClassName: tailscale
+  rules:
+    - host: {{ .Values.tailscale.webui }}
+      http:
+        paths:
+          - backend:
+              service:
+                name: "{{ .Release.Name }}-webui"
+                port:
+                  number: 8384
+            path: /
+            pathType: Prefix
+  tls:
+    - hosts:
+        - {{ .Values.tailscale.webui }}

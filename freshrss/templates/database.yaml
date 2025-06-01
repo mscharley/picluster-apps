@@ -1,0 +1,32 @@
+apiVersion: postgres-operator.crunchydata.com/v1beta1
+kind: PostgresCluster
+metadata:
+  name: pg-cluster
+  annotations:
+    postgres-operator.crunchydata.com/autoCreateUserSchema: "true"
+spec:
+  postgresVersion: 17
+  users:
+    - name: freshrss
+      databases:
+        - freshrss
+  instances:
+    - name: postgres
+      dataVolumeClaimSpec:
+        storageClassName: "postgresql"
+        accessModes:
+        - "ReadWriteOnce"
+        resources:
+          requests:
+            storage: 50Gi
+  backups:
+    pgbackrest:
+      repos:
+      - name: repo1
+        volume:
+          volumeClaimSpec:
+            accessModes:
+            - "ReadWriteOnce"
+            resources:
+              requests:
+                storage: 50Gi

@@ -1,0 +1,24 @@
+apiVersion: postgres-operator.crunchydata.com/v1beta1
+kind: PGAdmin
+metadata:
+  name: pgadmin-shared
+spec:
+  users:
+    - username: {{ .Values.admin.username }}
+      role: Administrator
+      passwordRef:
+        name: pgadmin-password-secret
+        key: password
+  dataVolumeClaimSpec:
+    accessModes:
+    - "ReadWriteOnce"
+    resources:
+      requests:
+        storage: 1Gi
+  serverGroups:
+    - name: supply
+      # An empty selector selects all postgresclusters in the Namespace
+      postgresClusterSelector: {}
+  config:
+    settings:
+      AUTHENTICATION_SOURCES: ['internal']

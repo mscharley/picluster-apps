@@ -1,0 +1,22 @@
+traefik:
+  logs:
+    general:
+      level: "INFO"
+
+  ingressClass:
+    isDefaultClass: false
+    name: "traefik"
+
+  service:
+    loadBalancerClass: 'metallb'
+    annotations:
+      metallb.io/address-pool: traefik-pool
+
+  ports:
+    traefik:
+      # We provide a better method of exposing port over tailscale with the integrated ACL support that tailscale has
+      expose: { default: false }
+
+  ingressRoute:
+    dashboard:
+      enabled: true

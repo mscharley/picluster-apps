@@ -1,0 +1,11 @@
+kubernetes-dashboard:
+  app:
+    ingress:
+      enabled: true
+      ingressClassName: tailscale
+      hosts:
+        - k8s-dashboard
+      useDefaultAnnotations: false
+      pathType: Prefix
+      issuer: { scope: disabled }
+      tls: { enabled: true }

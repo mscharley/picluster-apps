@@ -1,0 +1,7 @@
+apiVersion: v2
+name: pihole
+version: '0.0.0-development'
+dependencies:
+  - repository: https://openspeedtest.github.io/Helm-chart/
+    name: openspeedtest
+    version: '0.1.2'

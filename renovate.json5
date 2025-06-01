@@ -1,0 +1,17 @@
+{
+	// https://docs.renovatebot.com/configuration-options/
+	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
+	"extends": [
+		"local>picluster/renovate-config"
+	],
+	"packageRules": [
+		{
+			"matchPackageNames": ["renovate/renovate"],
+			"schedule": "on saturday"
+		},
+		{
+			"matchPackageNames": ["argo-*", "quay.io/argoproj/*"],
+			"groupName": "argo"
+		}
+	]
+}

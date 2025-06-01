@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: iscsi
+  namespace: argo-cd
+  labels:
+    argo/type: infrastructure
+spec:
+  project: default
+  syncPolicy:
+{{ .Values.syncPolicy | toYaml | indent 4 }}
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: kube-system
+  source:
+    repoURL: {{ .Values.repoURL }}
+    path: infrastructure/iscsi/
+    targetRevision: main
+    helm:
+      valuesObject:
+{{ .Values.iscsi | toYaml | indent 8 }}

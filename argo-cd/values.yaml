@@ -1,0 +1,17 @@
+argo-cd:
+  global:
+    image:
+      repository: quay.io/argoproj/argocd
+      tag: v3.0.5@sha256:868c96b0d1abf1a13864f1bb9830bd98707c2953eaab06d22874747456b5bf30
+
+  configs:
+    params:
+      server.insecure: true
+
+  server:
+    service:
+      servicePortHttp: 8080
+
+    ingress:
+      enabled: true
+      ingressClassName: tailscale
