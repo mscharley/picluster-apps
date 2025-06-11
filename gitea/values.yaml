@@ -7,7 +7,7 @@ renovate:
 
   image:
     repository: renovate/renovate
-    tag: 40.36.2@sha256:0612073dd7e166b6d637a0470bc843b8afd6e236f610b7a11aee33efb6af3377
+    tag: 40.49.12@sha256:d55da581243284b6642a59ed3d995e698c1f7ef3c98974dce50468c830666dd6
 
 gitea:
   image:
