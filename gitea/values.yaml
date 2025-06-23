@@ -1,5 +1,14 @@
 tailnet: tail012345.ts.net
 
+garm:
+  image:
+    registry: ghcr.io
+    repository: cloudbase/garm
+    # Needs to be at least 0.2.0, not released yet: 2025-06-04
+    tag: 'nightly'
+
+  # namespace: gitea-garm
+
 renovate:
   schedule: '*/10 * * * *'
   gitAuthor: 'Renovate Bot <renovate@scharley.me>'
@@ -13,7 +22,8 @@ gitea:
   image:
     registry: docker.gitea.com
     repository: gitea
-    tag: '1.23.8'
+    # Needs to be at least 1.24.0, not released yet: 2025-06-04
+    tag: '1.24.0-rc0'
 
   redis-cluster:
     enabled: false
@@ -49,7 +59,7 @@ gitea:
         LOG_RETENTION_DAYS: 90
 
   actions:
-    enabled: true
+    enabled: false
     existingSecret: 'gitea-actions-registration-token'
     existingSecretKey: 'token'
 
