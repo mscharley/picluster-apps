@@ -4,4 +4,4 @@ version: '0.0.0-development'
 dependencies:
   - repository: https://traefik.github.io/charts
     name: traefik
-    version: '36.2.0'
+    version: '36.3.0'
