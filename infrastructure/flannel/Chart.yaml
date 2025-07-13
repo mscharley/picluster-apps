@@ -4,4 +4,4 @@ version: '0.0.0-development'
 dependencies:
   - repository: https://flannel-io.github.io/flannel
     name: flannel
-    version: 'v0.27.0'
+    version: 'v0.27.1'
