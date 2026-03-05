@@ -6,6 +6,8 @@ argo-cd:
 
   configs:
     params:
+      applicationsetcontroller.policy: sync
+      applicationsetcontroller.enable.progressive.syncs: false
       applicationsetcontroller.namespaces: ""
       application.namespaces: ""
       server.insecure: true
