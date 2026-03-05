@@ -5,6 +5,8 @@ syncPolicy:
   automated:
     prune: true
     selfHeal: true
+  syncOptions:
+    - ServerSideApply=true
 
 nfs:
   server: truenas.local

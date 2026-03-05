@@ -13,8 +13,6 @@ spec:
   project: default
   syncPolicy:
 {{ .Values.syncPolicy | toYaml | indent 4 }}
-    syncOptions:
-    - Replace=true
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: pgo

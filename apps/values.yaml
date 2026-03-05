@@ -5,6 +5,8 @@ syncPolicy:
   automated:
     prune: true
     selfHeal: true
+  syncOptions:
+    - ServerSideApply=true
 
 pihole:
   localDomainName: local
