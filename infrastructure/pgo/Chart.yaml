@@ -4,4 +4,4 @@ version: '0.0.0-development'
 dependencies:
   - repository: oci://registry.developers.crunchydata.com/crunchydata
     name: pgo
-    version: '5.8.6'
+    version: '6.0.0'
