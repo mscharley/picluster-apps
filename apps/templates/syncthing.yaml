@@ -16,6 +16,12 @@ spec:
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: syncthing
+  ignoreDifferences:
+    - group: '*'
+      kind: StatefulSet
+      jqPathExpressions:
+        - .spec.volumeClaimTemplates[].apiVersion
+        - .spec.volumeClaimTemplates[].kind
   source:
     repoURL: {{ .Values.repoURL }}
     path: syncthing/
