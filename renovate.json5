@@ -4,15 +4,13 @@
 	"extends": [
 		"local>picluster/renovate-config"
 	],
+	"nix": {
+		"enabled": true
+	},
 	"packageRules": [
 		{
 			"matchPackageNames": ["renovate/renovate"],
 			"schedule": "on saturday"
-		},
-		{
-			"matchPackageNames": ["helm"],
-			// https://docs.renovatebot.com/presets-schedule/#schedulemonthly
-			"schedule": "* 0-3 1 * *"
 		},
 		{
 			"matchPackageNames": ["argo-*", "quay.io/argoproj/*"],
