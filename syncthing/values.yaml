@@ -1,7 +1,7 @@
 image:
   registry: lscr.io
   repository: linuxserver/syncthing
-  tag: '2.0.15@sha256:c96968aeee90168a7bac16a05deb9265de745a4cfa127afb3c8f31079c5eba17'
+  tag: '2.0.15@sha256:580ed2fe422253042da782cef634084e9868f7dcd449f5d6dd2b40e6e3a9dc13'
 
 tailscale:
   listener: syncthing
