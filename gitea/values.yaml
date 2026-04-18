@@ -13,7 +13,7 @@ gitea:
   image:
     registry: docker.gitea.com
     repository: gitea
-    tag: '1.25.5'
+    tag: '1.26.0'
 
   redis-cluster:
     enabled: false
